@@ -1,5 +1,5 @@
 <?php
-namespace Mail\Manager\Controller;
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) die();
 
 use Bitrix\Main\Engine\ActionFilter\Authentication;
 use Bitrix\Main\Engine\ActionFilter\HttpMethod;
@@ -7,22 +7,13 @@ use Bitrix\Main\Engine\Controller;
 use Bitrix\Main\Localization\Loc;
 use Mail\Manager\Orm\AuthorsTable;
 use Mail\Manager\Orm\BooksTable;
-use Mail\Manager\Profile;
 
 /**
- * Класс-контроллер содержит один метод для проверки работоспособности контроллеров.
- * Можно обратиться из консоли браузера:
- * ```
- * BX.ajax.runAction('mail:manager.basic.version')
- * ```
- *
- * Class Basic
- * @package YLab\Controller
+ * class CustomAjax
  */
-class Basic extends Controller
+class CustomAjaxController extends Controller
 {
     /**
-     * @inheritDoc
      * @return array
      */
     public function configureActions()
@@ -33,31 +24,15 @@ class Basic extends Controller
         ];
 
         return [
-            'addEmailsTable' => [
+            'addAuthorTable' => [
+                'prefilters' => $defaultFilters
+            ],
+            'addBooksTable' => [
                 'prefilters' => $defaultFilters
             ],
         ];
     }
 
-    /**
-     * Метод записывает данные из формы в таблицу emails
-     * @param $name
-     * @param $email
-     * @return string|void|null
-     */
-    public function addEmailsTableAction($name, $email)
-    {
-        $filds = [];
-
-        $filds['NAME'] = $name;
-        $filds['EMAIL'] = $email;
-
-        $profile = new Profile();
-
-        if($profile->addProfile($filds)){
-            return Loc::getMessage('YLAB_MAIL_MANAGER_CONTROLLER_USER');
-        }
-    }
     /**
      * Метод записывает данные из формы в таблицу authors
      * @param $name
@@ -73,7 +48,7 @@ class Basic extends Controller
         ]);
         if ($result->isSuccess())
         {
-            return Loc::getMessage('YLAB_MAIL_MANAGER_CONTROLLER_AUTHOR');
+            return Loc::getMessage('YLAB_MAIL_MANAGER_TEMPLATE_RESPONSE_AUTHORS');
         }
     }
 
@@ -92,7 +67,7 @@ class Basic extends Controller
 
         if ($result->isSuccess())
         {
-            return Loc::getMessage('YLAB_MAIL_MANAGER_CONTROLLER_BOOK');
+            return Loc::getMessage('YLAB_MAIL_MANAGER_TEMPLATE_RESPONSE_BOOKS');
         }
     }
 }

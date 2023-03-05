@@ -2,9 +2,9 @@
 return [
     'controllers' => [
         'value' => [
-            'namespaces' => [
-                'defaultNamespace' => '\\Mail\\Manager\\Controller',
-            ],
+
+                'defaultNamespace' => '\\Mail\\Manager\\Controller'
+
         ],
         'readonly' => true,
     ],

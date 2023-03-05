@@ -1,0 +1,5 @@
+<?php
+$MESS['YLAB_MAIL_MANAGER_FLOWERS_HEAD_ID'] = 'Индификатор записи';
+$MESS['YLAB_MAIL_MANAGER_FLOWERS_HEAD_NAME'] = 'Название цветка';
+$MESS['YLAB_MAIL_MANAGER_FLOWERS_HEAD_COUNTRY'] = 'Страна произрастания';
+$MESS['YLAB_MAIL_MANAGER_FLOWERS_HEAD_COLOR'] = 'Цвет цветка';

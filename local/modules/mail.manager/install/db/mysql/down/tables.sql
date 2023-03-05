@@ -1,1 +1,4 @@
 DROP TABLE IF EXISTS `y_emails`;
+DROP TABLE IF EXISTS `y_flowers`;
+DROP TABLE IF EXISTS `y_authors`;
+DROP TABLE IF EXISTS `y_books`;

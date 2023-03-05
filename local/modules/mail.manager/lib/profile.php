@@ -66,9 +66,21 @@ class Profile
 
     /**
      * Добавляем профиль
+     * @param $arFields
+     * @return bool|void
+     * @throws \Exception
      */
     public function addProfile($arFields)
     {
+        $result = EmailsTable::add([
+            'NAME' => $arFields['NAME'],
+            'EMAIL' => $arFields['EMAIL'],
+        ]);
+
+        if ($result->isSuccess())
+        {
+            return true;
+        }
     }
 
     /**
