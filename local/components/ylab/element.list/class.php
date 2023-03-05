@@ -8,6 +8,7 @@ use \CBitrixComponent;
 use \CIBlockElement;
 use \Exception;
 use Ylab\Helpers\HlBlockHelpers;
+use Ylab\Helpers\IBlockHelpers;
 
 /**
  * Class ElementListComponent
@@ -32,8 +33,6 @@ class ElementListComponent extends CBitrixComponent
     {
         Loader::includeModule('iblock');
 
-        $this->idIBlock = 4;
-
         if ($this->getTemplateName() == $this->hlTemplateName) {
             $this->arResult['ITEMS'] = $this->getDataFromHl();
         } else {
@@ -52,7 +51,7 @@ class ElementListComponent extends CBitrixComponent
         $result = [];
 
         $arFilter = [
-            'IBLOCK_ID' => $this->idIBlock
+            'IBLOCK_ID' => IBlockHelpers::getIBlockID('Позиции')
         ];
 
         $arCurSort = ['ID' => 'DESC'];
@@ -62,12 +61,19 @@ class ElementListComponent extends CBitrixComponent
             $arFilter,
             false,
             false,
-            ['ID', 'IBLOCK_ID', 'NAME', 'PROPERTY_PRICE', 'PROPERTY_PERCENT', 'PROPERTY_STATUS']
+            ['ID', 'IBLOCK_ID', 'NAME', 'PROPERTY_PRICE', 'PROPERTY_PERCENT', 'PROPERTY_STATUS', 'PROPERTY_WEIGHT',
+                'PROPERTY_NOMENKLATURE_NUMBER', 'PROPERTY_ORDER']
         );
 
         while ($element = $elements->GetNext()) {
 
             $total = $this->calcTotal($element);
+
+            if ($element['PROPERTY_ORDER_VALUE']){
+                $order = $element['PROPERTY_ORDER_VALUE'];
+            }else{
+                $order = Loc::getMessage('YLAB.ELEMENT.LIST.CLASS.NO_ORDER');
+            }
 
             $result[] = [
                 'ID' => $element['ID'],
@@ -76,6 +82,9 @@ class ElementListComponent extends CBitrixComponent
                 'PERCENT' => $element['PROPERTY_PERCENT_VALUE'],
                 'TOTAL' => $total,
                 'STATUS' => $element['PROPERTY_STATUS_VALUE'],
+                'WEIGHT' => $element['PROPERTY_WEIGHT_VALUE'],
+                'NOMENKLATURE_NUMBER' => $element['PROPERTY_NOMENKLATURE_NUMBER_VALUE'],
+                'ORDER' => $order
             ];
         }
 
